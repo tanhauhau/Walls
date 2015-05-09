@@ -1,7 +1,6 @@
 package com.walls.walls.model;
 
 import android.util.Log;
-
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -31,7 +30,6 @@ public class CatalogManager {
             public void done(List<ParseObject> list, ParseException e) {
                 if (e != null) {
                     // Handle exception
-                    Log.e("Tan", e.getMessage());
                 } else {
                     callback.onReceive(list);
                 }
