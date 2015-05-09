@@ -2,12 +2,14 @@ package com.walls.walls;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -15,14 +17,17 @@ import com.squareup.picasso.Picasso;
 import com.walls.walls.R;
 import com.walls.walls.model.CatalogManager;
 
-public class MealDetailActivity extends ActionBarActivity implements View.OnClickListener, CatalogManager.MealDetailCallback{
+import java.util.Random;
+
+public class MealDetailActivity extends ActionBarActivity implements View.OnClickListener, CatalogManager.MealDetailCallback, OrderManager.OrderCallback {
     private Button btnSubmit;
     private ImageView imgFood;
-    private TextView txtName, txtPrice, txtDesc, txtTable;
+    private TextView txtName, txtPrice, txtDesc, txtTable, txtTime;
     private String tableId, mealId;
     private View progress;
     public static final String MEAL_ID = "mid";
     public static final String TABLE_ID = "table";
+    public static final String APP_MADE = "apm";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,16 +39,26 @@ public class MealDetailActivity extends ActionBarActivity implements View.OnClic
             mealId = bundle.getString(MEAL_ID);
             tableId = bundle.getString(TABLE_ID);
             if(tableId == null)  tableId = "lihau";
+            CatalogManager.getMealDetail(mealId, this);
+
         }
         imgFood = (ImageView)findViewById(R.id.img_food);
         txtName = (TextView)findViewById(R.id.txt_food_name);
         txtPrice = (TextView)findViewById(R.id.txt_food_price);
         txtDesc = (TextView)findViewById(R.id.txt_food_desc);
         txtTable = (TextView) findViewById(R.id.txt_table);
+        txtTime = (TextView) findViewById(R.id.txt_food_time);
         btnSubmit = (Button)findViewById(R.id.btn_submit);
         progress = findViewById(R.id.progress);
         btnSubmit.setOnClickListener(this);
         btnSubmit.setEnabled(false);
+
+        if(bundle != null) {
+            if (bundle.getBoolean(APP_MADE)) {
+                btnSubmit.setVisibility(View.GONE);
+                txtTime.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
@@ -61,5 +76,19 @@ public class MealDetailActivity extends ActionBarActivity implements View.OnClic
         txtDesc.setText(parseObject.getString("desc"));
         txtPrice.setText(parseObject.getString("price"));
         btnSubmit.setEnabled(true);
+
+        //fixed hack
+        txtTime.setText(String.format("Estimated %d mins", 15));
+    }
+
+    @Override
+    public void orderMade(boolean success) {
+        if(success) {
+            Toast.makeText(this, R.string.order_success, Toast.LENGTH_LONG).show();
+            btnSubmit.setVisibility(View.GONE);
+            txtTime.setVisibility(View.VISIBLE);
+        }else{
+            Toast.makeText(this, R.string.order_error, Toast.LENGTH_LONG).show();
+        }
     }
 }

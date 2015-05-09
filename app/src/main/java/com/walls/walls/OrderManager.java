@@ -26,9 +26,11 @@ public class OrderManager {
         public void isServed(boolean served);
         public void queueInFront(int count);
     }
+    public static interface OrderCallback{
+        public void orderMade(boolean success);
+    }
 
-
-    public static void makeOrder(final Activity activity, String mealID, String tableID){
+    public static void makeOrder(final OrderCallback activity, String mealID, String tableID){
         final ParseObject newOrder = new ParseObject(ORDER);
         newOrder.put("mealId", ParseObject.createWithoutData("Meal", mealID));
         newOrder.put("tableName", tableID);
@@ -41,11 +43,11 @@ public class OrderManager {
                     //save to local
                     newOrder.pinInBackground();
                     //notify
-                    Toast.makeText(activity, R.string.order_success, Toast.LENGTH_LONG).show();
+                    activity.orderMade(true);
                 }else{
                     Log.d("Tan", "Error: " + e.getCode());
                     Log.d("Tan", "Error: " + e.getMessage());
-                    Toast.makeText(activity, R.string.order_error, Toast.LENGTH_LONG).show();
+                    activity.orderMade(false);
                 }
             }
         });
@@ -59,7 +61,7 @@ public class OrderManager {
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 if (e != null && parseObjects != null && parseObjects.size() > 0) {
                     //check online if the food served
-                    ParseObject object = parseObjects.get(0);
+                    final ParseObject object = parseObjects.get(0);
                     ParseQuery<ParseObject> query = ParseQuery.getQuery(ORDER);
                     query.getInBackground((String) object.get(OBJECT_ID), new GetCallback<ParseObject>() {
                         @Override
@@ -79,6 +81,8 @@ public class OrderManager {
                                             callback.queueInFront(i);
                                         }
                                     });
+                                }else{
+                                    object.unpinInBackground();
                                 }
                             }
                         }
@@ -89,7 +93,7 @@ public class OrderManager {
     }
 
     public static interface CheckLocalCallback{
-        public void done(boolean found);
+        public void done(boolean found, ParseObject object);
     }
 
     public static void havePendingOrder(final CheckLocalCallback callback){
@@ -98,9 +102,31 @@ public class OrderManager {
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> orderList, ParseException e) {
                 if (e == null) {
-                    callback.done(orderList.size() != 0);
+                    if(orderList.size() > 0) {
+                        ParseObject obj = orderList.get(0);
+                        ParseQuery<ParseObject> qry = ParseQuery.getQuery(ORDER);
+                        qry.getInBackground(obj.getObjectId(), new GetCallback<ParseObject>() {
+                            @Override
+                            public void done(ParseObject parseObject, ParseException e) {
+                                if (e != null) {
+                                }else{
+                                    if (parseObject.getBoolean("isServed")) {
+                                        callback.done(false, null);
+                                        parseObject.unpinInBackground();
+                                    } else {
+                                        callback.done(true, parseObject);
+                                    }
+                                }
+                            }
+                        });
+//
+////                        callback.done(true, orderList.get(0));
+//                    }else {
+//                        callback.done(false, null);
+//                    }
+                    }
                 } else {
-                    callback.done(false);
+                    callback.done(false, null);
                     Log.d("score", "Error: " + e.getMessage());
                 }
             }

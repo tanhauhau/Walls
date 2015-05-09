@@ -3,6 +3,7 @@ package com.walls.walls;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -33,6 +34,7 @@ public class SellerListActivity extends ActionBarActivity implements CatalogMana
     }
     @Override
     public void onReceive(List<ParseObject> parseObjects) {
+        Log.d("Tan", "onreceive seller list");
         listView.setAdapter(new SellerAdapter(this, parseObjects));
     }
 
