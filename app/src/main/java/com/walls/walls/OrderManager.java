@@ -7,11 +7,9 @@ import android.widget.Toast;
 import com.parse.CountCallback;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
-import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.util.List;
@@ -83,13 +81,18 @@ public class OrderManager {
             }
         });
     }
+
+    public static interface CheckLocalCallback{
+        public void done(boolean found);
+    }
+
     public static void havePendingOrder(final CheckLocalCallback callback){
         ParseQuery<ParseObject> query = ParseQuery.getQuery(ORDER);
         query.fromLocalDatastore();
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> orderList, ParseException e) {
                 if (e == null) {
-                    callback.done(orderList.size() == 0);
+                    callback.done(orderList.size() != 0);
                 } else {
                     callback.done(false);
                     Log.d("score", "Error: " + e.getMessage());

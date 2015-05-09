@@ -3,25 +3,21 @@ package com.walls.walls;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
-interface CheckLocalCallback{
-    public void done(boolean found);
-}
-
-public class MainActivity extends ActionBarActivity implements CheckLocalCallback{
+public class MainActivity extends ActionBarActivity implements OrderManager.CheckLocalCallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.d("Tan", "MainActivity.ONCREATE");
+
         //check order made havent served
         OrderManager.havePendingOrder(this);
-
         setContentView(R.layout.activity_flash);
     }
     @Override
@@ -29,7 +25,7 @@ public class MainActivity extends ActionBarActivity implements CheckLocalCallbac
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(result != null) {
             if(result.getContents() == null) {
-                finish();
+//                finish();
 //                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
@@ -38,13 +34,15 @@ public class MainActivity extends ActionBarActivity implements CheckLocalCallbac
         } else {
             //no matter what come back, end the application,
             // unless is from qr scanner
-            finish();
+//            finish();
             // This is important, otherwise the result will not be passed to the fragment
 //            super.onActivityResult(requestCode, resultCode, data);
         }
     }
     private void processContent(String contents) {
-        OrderManager.makeOrder(this, contents, "lihau");
+        Intent intent = new Intent(this, SellerListActivity.class);
+        intent.putExtra(SellerListActivity.HAWKER_CENTER_ID, contents);
+        startActivityForResult(intent, -1);
     }
 
     @Override

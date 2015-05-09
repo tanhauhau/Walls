@@ -1,11 +1,10 @@
 package com.walls.walls.model;
 
 import android.util.Log;
-
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.List;
 
@@ -25,14 +24,12 @@ public class CatalogManager {
 
     public static void getSellerList(String hawkerCenterId, final SellerListCallback callback){
         ParseQuery<ParseObject> querySellerList = ParseQuery.getQuery("Seller");
-        querySellerList.whereEqualTo("hawkerCenter", hawkerCenterId);
+        querySellerList.whereEqualTo("hawkerCenter", ParseObject.createWithoutData("HawkerCenter", hawkerCenterId));
         querySellerList.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
                 if (e != null) {
                     // Handle exception
-                    Log.e("Order", e.getMessage());
-                    callback.onReceive(list);
                 } else {
                     callback.onReceive(list);
                 }
@@ -40,9 +37,9 @@ public class CatalogManager {
         });
 
     }
-    public static void getMealList(ParseObject sellerId,final MealListCallback callback){
+    public static void getMealList(String sellerId, final MealListCallback callback){
         ParseQuery<ParseObject> queryMealList = ParseQuery.getQuery("Meal");
-        queryMealList.whereEqualTo("sellerId", sellerId);
+        queryMealList.whereEqualTo("sellerId", ParseObject.createWithoutData("Seller", sellerId));
         queryMealList.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
