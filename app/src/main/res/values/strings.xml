@@ -9,6 +9,9 @@
     <string name="button_submit">Submit</string>
     <string name="label_scan">Scan QR Code for Food</string>
     <string name="button_scan">Scan</string>
+    <string name="button_buy">Buy</string>
+    <string name="order_error">Order Error!</string>
+    <string name="order_success">Order Made!</string>
 
     <!-- Parse app id -->
     <string name="parse_app_id">nXyOzLZ4xAbGYK69ZjlMVgu8iK7KKAngn9FN1kAA</string>
