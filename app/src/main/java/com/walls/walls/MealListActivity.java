@@ -5,11 +5,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ListView;
 
 import com.parse.ParseObject;
 import com.walls.walls.adapter.MealAdapter;
-import com.walls.walls.adapter.SellerAdapter;
 import com.walls.walls.model.CatalogManager;
 
 import java.util.List;
@@ -18,7 +16,7 @@ import java.util.List;
  * Created by lhtan on 9/5/15.
  */
 public class MealListActivity extends ActionBarActivity implements AdapterView.OnItemClickListener, CatalogManager.MealListCallback {
-    private final static String SELLER_ID = "sid";
+    public final static String SELLER_ID = "sid";
     private GridView gridView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -2,10 +2,10 @@ package com.walls.walls.model;
 
 import android.util.Log;
 
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class CatalogManager {
 
     public static void getSellerList(String hawkerCenterId, final SellerListCallback callback){
         ParseQuery<ParseObject> querySellerList = ParseQuery.getQuery("Seller");
-        querySellerList.whereEqualTo("hawkerCenter", hawkerCenterId);
+        querySellerList.whereEqualTo("hawkerCenter", ParseObject.createWithoutData("HawkerCenter", hawkerCenterId));
         querySellerList.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {

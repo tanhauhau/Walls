@@ -1,5 +1,6 @@
 package com.walls.walls;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -35,6 +36,9 @@ public class SellerListActivity extends ActionBarActivity implements CatalogMana
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        parent.getAdapter().getItem(position);
+        Intent intent = new Intent(this, MealListActivity.class);
+        ParseObject parseObject = (ParseObject) parent.getAdapter().getItem(position);
+        intent.putExtra(MealListActivity.SELLER_ID, parseObject.getObjectId());
+        startActivity(intent);
     }
 }

@@ -1,11 +1,7 @@
 package com.walls.walls;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.AttributeSet;
-import android.view.View;
 
 /**
  * Created by lhtan on 9/5/15.

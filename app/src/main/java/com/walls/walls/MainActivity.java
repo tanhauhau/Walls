@@ -8,8 +8,6 @@ import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
 public class MainActivity extends ActionBarActivity implements OrderManager.CheckLocalCallback {
     @Override
