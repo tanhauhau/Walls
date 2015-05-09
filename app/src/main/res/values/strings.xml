@@ -9,4 +9,8 @@
     <string name="button_submit">Submit</string>
     <string name="label_scan">Scan QR Code for Food</string>
     <string name="button_scan">Scan</string>
+
+    <!-- Parse app id -->
+    <string name="parse_app_id">nXyOzLZ4xAbGYK69ZjlMVgu8iK7KKAngn9FN1kAA</string>
+    <string name="parse_client_key">S91xvMUrIbh0KfPKimzgf5lmngGEmjcWmIhQYvlm</string>
 </resources>
