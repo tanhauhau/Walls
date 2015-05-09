@@ -20,13 +20,12 @@ public class OrderTask extends AsyncTask<Void, Void, Boolean>{
 
     @Override
     protected Boolean doInBackground(Void... params) {
-        Toast.makeText(_context, String.format("meal: %s table: %s", _mealID, _tableID), Toast.LENGTH_LONG).show();
 //        _mealID = "";
-        return null;
+        return false;
     }
 
     @Override
     protected void onPostExecute(Boolean aBoolean) {
-        super.onPostExecute(aBoolean);
+        Toast.makeText(_context, String.format("meal: %s table: %s", _mealID, _tableID), Toast.LENGTH_LONG).show();
     }
 }

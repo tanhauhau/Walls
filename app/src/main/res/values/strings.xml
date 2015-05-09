@@ -8,4 +8,5 @@
     <string name="label_table_id">Table ID</string>
     <string name="button_submit">Submit</string>
     <string name="label_scan">Scan QR Code for Food</string>
+    <string name="button_scan">Scan</string>
 </resources>

@@ -30,7 +30,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         if(fragment != null){
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.container, fragment)
+                    .replace(R.id.container, fragment)
                     .commit();
         }
     }
