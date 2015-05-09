@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Walls</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <!-- client order -->
+    <string name="toast_empty_field">Field Empty!</string>
+    <string name="label_meal_id">Meal ID</string>
+    <string name="label_table_id">Table ID</string>
+    <string name="button_submit">Submit</string>
+    <string name="label_scan">Scan QR Code for Food</string>
+</resources>
