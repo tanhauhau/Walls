@@ -15,6 +15,7 @@ import java.util.List;
 
 public class SellerListActivity extends ActionBarActivity implements CatalogManager.SellerListCallback, AdapterView.OnItemClickListener {
     public static final String HAWKER_CENTER_ID = "hcid";
+    private String tableId;
     private ListView listView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class SellerListActivity extends ActionBarActivity implements CatalogMana
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             final String hcid = bundle.getString(HAWKER_CENTER_ID);
+            tableId = bundle.getString(MealDetailActivity.TABLE_ID);
             CatalogManager.getSellerList(hcid, this);
         }
     }
@@ -39,6 +41,7 @@ public class SellerListActivity extends ActionBarActivity implements CatalogMana
         Intent intent = new Intent(this, MealListActivity.class);
         ParseObject parseObject = (ParseObject) parent.getAdapter().getItem(position);
         intent.putExtra(MealListActivity.SELLER_ID, parseObject.getObjectId());
+        intent.putExtra(MealDetailActivity.TABLE_ID, tableId);
         startActivity(intent);
     }
 }

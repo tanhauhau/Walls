@@ -32,11 +32,17 @@
             android:name=".SellerListActivity"
             android:label="@string/title_seller_list" >
         </activity>
-        <activity android:name=".ViewOrderActivity"
-            android:label="@string/title_order_view">
+        <activity
+            android:name=".ViewOrderActivity"
+            android:label="@string/title_order_view" >
         </activity>
-        <activity android:name=".MealListActivity"
-            android:label="@string/title_meal_list">
+        <activity
+            android:name=".MealListActivity"
+            android:label="@string/title_meal_list" >
+        </activity>
+        <activity
+            android:name=".MealDetailActivity"
+            android:label="@string/title_activity_meal_detail" >
         </activity>
     </application>
 

@@ -7,12 +7,7 @@ import android.support.v7.app.ActionBarActivity;
  * Created by lhtan on 9/5/15.
  */
 
-interface CheckServedCallback{
-    public void isServed(boolean served);
-    public void queueInFront(int count);
-}
-
-public class ViewOrderActivity extends ActionBarActivity implements CheckServedCallback{
+public class ViewOrderActivity extends ActionBarActivity implements OrderManager.CheckServedCallback{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -22,6 +22,12 @@ public class OrderManager {
     private static final String ORDER = "Order";
     private static final String OBJECT_ID = "objectId";
 
+    public static interface CheckServedCallback{
+        public void isServed(boolean served);
+        public void queueInFront(int count);
+    }
+
+
     public static void makeOrder(final Activity activity, String mealID, String tableID){
         final ParseObject newOrder = new ParseObject(ORDER);
         newOrder.put("mealId", ParseObject.createWithoutData("Meal", mealID));

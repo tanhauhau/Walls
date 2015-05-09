@@ -2,6 +2,7 @@ package com.walls.walls.model;
 
 import android.util.Log;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -20,6 +21,9 @@ public class CatalogManager {
     }
     public static interface MealListCallback {
         public void onReceive(List<ParseObject> parseObjects);
+    }
+    public static interface MealDetailCallback {
+        public void onReceive(ParseObject parseObject);
     }
 
     public static void getSellerList(String hawkerCenterId, final SellerListCallback callback){
@@ -50,6 +54,15 @@ public class CatalogManager {
                 } else {
                     callback.onReceive(list);
                 }
+            }
+        });
+    }
+    public static void getMealDetail(String mealID, final MealDetailCallback callback){
+        ParseQuery<ParseObject> queryMealDetail = ParseQuery.getQuery("Meal");
+        queryMealDetail.getInBackground(mealID, new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                callback.onReceive(parseObject);
             }
         });
     }
