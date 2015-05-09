@@ -83,13 +83,18 @@ public class OrderManager {
             }
         });
     }
+
+    public static interface CheckLocalCallback{
+        public void done(boolean found);
+    }
+
     public static void havePendingOrder(final CheckLocalCallback callback){
         ParseQuery<ParseObject> query = ParseQuery.getQuery(ORDER);
         query.fromLocalDatastore();
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> orderList, ParseException e) {
                 if (e == null) {
-                    callback.done(orderList.size() == 0);
+                    callback.done(orderList.size() != 0);
                 } else {
                     callback.done(false);
                     Log.d("score", "Error: " + e.getMessage());

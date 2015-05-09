@@ -12,7 +12,7 @@ import com.walls.walls.model.CatalogManager;
 
 import java.util.List;
 
-public class SellerListActivity extends ActionBarActivity implements CatalogManager.HawkerListCallback, AdapterView.OnItemClickListener {
+public class SellerListActivity extends ActionBarActivity implements CatalogManager.SellerListCallback, AdapterView.OnItemClickListener {
     public static final String HAWKER_CENTER_ID = "hcid";
     private ListView listView;
     @Override
@@ -25,7 +25,7 @@ public class SellerListActivity extends ActionBarActivity implements CatalogMana
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
             final String hcid = bundle.getString(HAWKER_CENTER_ID);
-            CatalogManager.getHawkerList(hcid, this);
+            CatalogManager.getSellerList(hcid, this);
         }
     }
     @Override
