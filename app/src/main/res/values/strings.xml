@@ -13,9 +13,12 @@
     <string name="order_error">Order Error!</string>
     <string name="order_success">Order Made!</string>
 
+    <!-- title -->
+    <string name="title_seller_list">Sellers</string>
+    <string name="title_order_view">Order</string>
+    <string name="title_meal_list">Meals</string>
+
     <!-- Parse app id -->
     <string name="parse_app_id">nXyOzLZ4xAbGYK69ZjlMVgu8iK7KKAngn9FN1kAA</string>
     <string name="parse_client_key">S91xvMUrIbh0KfPKimzgf5lmngGEmjcWmIhQYvlm</string>
-    <string name="title_seller_list">Seller</string>
-    <string name="title_seller_detail">Seller Detail</string>
 </resources>
