@@ -1,5 +1,6 @@
 package com.walls.walls;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,12 +20,12 @@ import com.walls.walls.model.CatalogManager;
 
 import java.util.Random;
 
-public class MealDetailActivity extends ActionBarActivity implements View.OnClickListener, CatalogManager.MealDetailCallback, OrderManager.OrderCallback {
+public class MealDetailActivity extends Activity implements View.OnClickListener, CatalogManager.MealDetailCallback, OrderManager.OrderCallback {
     private Button btnSubmit;
     private ImageView imgFood;
     private TextView txtName, txtPrice, txtDesc, txtTable, txtTime;
     private String tableId, mealId;
-    private View progress;
+    private View progress, rowTime;
     public static final String MEAL_ID = "mid";
     public static final String TABLE_ID = "table";
     public static final String APP_MADE = "apm";
@@ -40,7 +41,7 @@ public class MealDetailActivity extends ActionBarActivity implements View.OnClic
         if(bundle != null){
             mealId = bundle.getString(MEAL_ID);
             tableId = bundle.getString(TABLE_ID);
-            if(tableId == null)  tableId = "lihau";
+            if(tableId == null)  tableId = "";
             CatalogManager.getMealDetail(mealId, this);
 
         }
@@ -50,6 +51,7 @@ public class MealDetailActivity extends ActionBarActivity implements View.OnClic
         txtDesc = (TextView)findViewById(R.id.txt_food_desc);
         txtTable = (TextView) findViewById(R.id.txt_table);
         txtTime = (TextView) findViewById(R.id.txt_food_time);
+        rowTime = findViewById(R.id.row_time);
         btnSubmit = (Button)findViewById(R.id.btn_submit);
         progress = findViewById(R.id.progress);
         btnSubmit.setOnClickListener(this);
@@ -57,12 +59,15 @@ public class MealDetailActivity extends ActionBarActivity implements View.OnClic
 
         if(bundle != null) {
             if (bundle.getBoolean(APP_MADE)) {
-                btnSubmit.setVisibility(View.GONE);
-                txtTime.setVisibility(View.VISIBLE);
-                txtTable.setVisibility(View.GONE);
+                showTimeRemaining();
                 bought = true;
             }
         }
+    }
+
+    private void showTimeRemaining() {
+        btnSubmit.setVisibility(View.GONE);
+        rowTime.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -75,23 +80,21 @@ public class MealDetailActivity extends ActionBarActivity implements View.OnClic
         txtName.setText(parseObject.getString("name"));
         ParseFile imgfile = parseObject.getParseFile("file");
         Picasso.with(this).load(imgfile.getUrl()).into(imgFood);
-        txtTable.setText(tableId);
+        txtTable.setText("Table " + tableId);
         mealId = parseObject.getObjectId();
         txtDesc.setText(parseObject.getString("desc"));
         txtPrice.setText("SGD " + parseObject.getNumber("price"));
         btnSubmit.setEnabled(true);
 
         //fixed hack
-        txtTime.setText(String.format("Estimated %d mins", 15));
+        txtTime.setText(String.format("Estimated time: %d mins", 15));
     }
 
     @Override
     public void orderMade(boolean success) {
         if(success) {
             Toast.makeText(this, R.string.order_success, Toast.LENGTH_LONG).show();
-            btnSubmit.setVisibility(View.GONE);
-            txtTime.setVisibility(View.VISIBLE);
-
+            showTimeRemaining();
             bought = true;
         }else{
             Toast.makeText(this, R.string.order_error, Toast.LENGTH_LONG).show();
@@ -105,6 +108,4 @@ public class MealDetailActivity extends ActionBarActivity implements View.OnClic
         }
         super.onBackPressed();
     }
-
-    //
 }

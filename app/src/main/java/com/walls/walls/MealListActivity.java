@@ -1,5 +1,6 @@
 package com.walls.walls;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -17,7 +18,7 @@ import java.util.List;
 /**
  * Created by lhtan on 9/5/15.
  */
-public class MealListActivity extends ActionBarActivity implements AdapterView.OnItemClickListener, CatalogManager.MealListCallback {
+public class MealListActivity extends Activity implements AdapterView.OnItemClickListener, CatalogManager.MealListCallback {
     public final static String SELLER_ID = "sid";
     private String tableId;
     private GridView gridView;

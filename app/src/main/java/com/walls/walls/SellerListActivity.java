@@ -1,5 +1,6 @@
 package com.walls.walls;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -14,7 +15,7 @@ import com.walls.walls.model.CatalogManager;
 
 import java.util.List;
 
-public class SellerListActivity extends ActionBarActivity implements CatalogManager.SellerListCallback, AdapterView.OnItemClickListener {
+public class SellerListActivity extends Activity implements CatalogManager.SellerListCallback, AdapterView.OnItemClickListener {
     public static final String HAWKER_CENTER_ID = "hcid";
     private String tableId;
     private ListView listView;

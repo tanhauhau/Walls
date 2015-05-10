@@ -1,8 +1,8 @@
 package com.walls.walls;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -10,7 +10,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.parse.ParseObject;
 
-public class MainActivity extends ActionBarActivity implements OrderManager.CheckLocalCallback {
+public class MainActivity extends Activity implements OrderManager.CheckLocalCallback {
 
     public static final int REQUEST_MAKE_ORDER = 888;
     public static final int REQUEST_ORDER_DETAILS = 999;
@@ -79,6 +79,7 @@ public class MainActivity extends ActionBarActivity implements OrderManager.Chec
             //direct to hack page
             Intent intent = new Intent(this, MealDetailActivity.class);
             intent.putExtra(MealDetailActivity.MEAL_ID, ((ParseObject) object.get("mealId")).getObjectId());
+            intent.putExtra(MealDetailActivity.TABLE_ID, object.getString("tableName"));
             intent.putExtra(MealDetailActivity.APP_MADE, true);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);

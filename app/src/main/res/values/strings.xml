@@ -17,7 +17,7 @@
     <string name="title_seller_list">Sellers</string>
     <string name="title_order_view">Order</string>
     <string name="title_meal_list">Meals</string>
-    <string name="title_activity_meal_detail">Meal</string>
+    <string name="title_activity_meal_detail">Pending Order</string>
 
     <!-- Parse app id -->
     <string name="parse_app_id">nXyOzLZ4xAbGYK69ZjlMVgu8iK7KKAngn9FN1kAA</string>
