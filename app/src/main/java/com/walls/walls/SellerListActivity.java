@@ -44,12 +44,22 @@ public class SellerListActivity extends ActionBarActivity implements CatalogMana
         ParseObject parseObject = (ParseObject) parent.getAdapter().getItem(position);
         intent.putExtra(MealListActivity.SELLER_ID, parseObject.getObjectId());
         intent.putExtra(MealDetailActivity.TABLE_ID, tableId);
-        startActivity(intent);
+        startActivityForResult(intent, MainActivity.REQUEST_MAKE_ORDER);
     }
 
     @Override
     public void onBackPressed() {
         setResult(MainActivity.REQUEST_MAKE_ORDER);
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == MainActivity.REQUEST_MAKE_ORDER){
+            if(resultCode == MainActivity.REQUEST_ORDER_DETAILS){
+                setResult(MainActivity.REQUEST_ORDER_DETAILS);
+                finish();
+            }
+        }
     }
 }

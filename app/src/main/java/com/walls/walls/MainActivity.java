@@ -30,8 +30,12 @@ public class MainActivity extends ActionBarActivity implements OrderManager.Chec
         Log.d("Tan", "requestcode: " + requestCode);
         Log.d("Tan", "resultcode: " + resultCode);
 
-        if(requestCode == REQUEST_MAKE_ORDER && resultCode == REQUEST_MAKE_ORDER){
-            done(false, null);
+        if(requestCode == REQUEST_MAKE_ORDER){
+            if(resultCode == REQUEST_MAKE_ORDER) {
+                done(false, null);
+            }else if(resultCode == REQUEST_ORDER_DETAILS){
+                finish();
+            }
         } else if(requestCode == REQUEST_ORDER_DETAILS) {
             finish();
         } else {

@@ -36,6 +36,16 @@ public class MealListActivity extends ActionBarActivity implements AdapterView.O
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == MainActivity.REQUEST_MAKE_ORDER){
+            if(resultCode == MainActivity.REQUEST_ORDER_DETAILS){
+                setResult(MainActivity.REQUEST_ORDER_DETAILS);
+                finish();
+            }
+        }
+    }
+
+    @Override
     public void onReceive(List<ParseObject> parseObjects) {
         gridView.setAdapter(new MealAdapter(this, parseObjects));
     }
@@ -47,6 +57,6 @@ public class MealListActivity extends ActionBarActivity implements AdapterView.O
         Intent intent = new Intent(this, MealDetailActivity.class);
         intent.putExtra(MealDetailActivity.TABLE_ID, tableId);
         intent.putExtra(MealDetailActivity.MEAL_ID, mealId);
-        startActivity(intent);
+        startActivityForResult(intent, MainActivity.REQUEST_MAKE_ORDER);
     }
 }
