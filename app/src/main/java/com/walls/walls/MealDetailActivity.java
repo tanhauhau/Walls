@@ -59,6 +59,7 @@ public class MealDetailActivity extends ActionBarActivity implements View.OnClic
             if (bundle.getBoolean(APP_MADE)) {
                 btnSubmit.setVisibility(View.GONE);
                 txtTime.setVisibility(View.VISIBLE);
+                txtTable.setVisibility(View.GONE);
                 bought = true;
             }
         }
@@ -77,7 +78,7 @@ public class MealDetailActivity extends ActionBarActivity implements View.OnClic
         txtTable.setText(tableId);
         mealId = parseObject.getObjectId();
         txtDesc.setText(parseObject.getString("desc"));
-        txtPrice.setText(parseObject.getString("price"));
+        txtPrice.setText("SGD " + parseObject.getNumber("price"));
         btnSubmit.setEnabled(true);
 
         //fixed hack
@@ -90,7 +91,7 @@ public class MealDetailActivity extends ActionBarActivity implements View.OnClic
             Toast.makeText(this, R.string.order_success, Toast.LENGTH_LONG).show();
             btnSubmit.setVisibility(View.GONE);
             txtTime.setVisibility(View.VISIBLE);
-            
+
             bought = true;
         }else{
             Toast.makeText(this, R.string.order_error, Toast.LENGTH_LONG).show();
