@@ -91,4 +91,6 @@ public class MealDetailActivity extends ActionBarActivity implements View.OnClic
             Toast.makeText(this, R.string.order_error, Toast.LENGTH_LONG).show();
         }
     }
+
+    //
 }

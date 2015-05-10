@@ -46,4 +46,10 @@ public class SellerListActivity extends ActionBarActivity implements CatalogMana
         intent.putExtra(MealDetailActivity.TABLE_ID, tableId);
         startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed() {
+        setResult(MainActivity.REQUEST_MAKE_ORDER);
+        super.onBackPressed();
+    }
 }

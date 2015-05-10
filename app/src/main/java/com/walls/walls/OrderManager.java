@@ -99,17 +99,21 @@ public class OrderManager {
     public static void havePendingOrder(final CheckLocalCallback callback){
         ParseQuery<ParseObject> query = ParseQuery.getQuery(ORDER);
         query.fromLocalDatastore();
+        Log.d("Tan", "have pending order");
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> orderList, ParseException e) {
+                Log.d("Tan", "done");
                 if (e == null) {
+                    Log.d("Tan", "e == null");
                     if(orderList.size() > 0) {
+                        Log.d("Tan", "order size > 0");
                         ParseObject obj = orderList.get(0);
                         ParseQuery<ParseObject> qry = ParseQuery.getQuery(ORDER);
                         qry.getInBackground(obj.getObjectId(), new GetCallback<ParseObject>() {
                             @Override
                             public void done(ParseObject parseObject, ParseException e) {
                                 if (e != null) {
-                                }else{
+                                } else {
                                     if (parseObject.getBoolean("isServed")) {
                                         callback.done(false, null);
                                         parseObject.unpinInBackground();
@@ -119,15 +123,18 @@ public class OrderManager {
                                 }
                             }
                         });
+                    } else {
+                        callback.done(false, null);
+                    }
+
 //
 ////                        callback.done(true, orderList.get(0));
 //                    }else {
 //                        callback.done(false, null);
 //                    }
-                    }
                 } else {
                     callback.done(false, null);
-                    Log.d("score", "Error: " + e.getMessage());
+                    Log.d("Tan", "Error: " + e.getMessage());
                 }
             }
         });

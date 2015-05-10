@@ -33,10 +33,6 @@
             android:label="@string/title_seller_list" >
         </activity>
         <activity
-            android:name=".ViewOrderActivity"
-            android:label="@string/title_order_view" >
-        </activity>
-        <activity
             android:name=".MealListActivity"
             android:label="@string/title_meal_list" >
         </activity>

@@ -11,6 +11,10 @@ import com.google.zxing.integration.android.IntentResult;
 import com.parse.ParseObject;
 
 public class MainActivity extends ActionBarActivity implements OrderManager.CheckLocalCallback {
+
+    public static final int REQUEST_MAKE_ORDER = 888;
+    public static final int REQUEST_ORDER_DETAILS = 999;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,26 +27,25 @@ public class MainActivity extends ActionBarActivity implements OrderManager.Chec
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == -1) {
-            finish();
-            return;
-        }
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(result != null) {
-            if(result.getContents() == null) {
-                finish();
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-            } else {
-//                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
-                processContent(result.getContents());
-            }
-        } else {
-            finish();
-            //no matter what come back, end the application,
-            // unless is from qr scanner
+        Log.d("Tan", "requestcode: " + requestCode);
+        Log.d("Tan", "resultcode: " + resultCode);
 
-            // This is important, otherwise the result will not be passed to the fragment
-//            super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_MAKE_ORDER && resultCode == REQUEST_MAKE_ORDER){
+            done(false, null);
+        } else if(requestCode == REQUEST_ORDER_DETAILS) {
+            finish();
+        } else {
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+            if (result != null) {
+                Log.d("Tan", "result != null");
+                if (result.getContents() == null) {
+                    finish();
+                    Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                } else {
+                    //                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                    processContent(result.getContents());
+                }
+            }
         }
     }
     private void processContent(String contents) {
@@ -52,12 +55,12 @@ public class MainActivity extends ActionBarActivity implements OrderManager.Chec
             intent.putExtra(SellerListActivity.HAWKER_CENTER_ID, a[0]);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra(MealDetailActivity.TABLE_ID, a[1]);
-            startActivityForResult(intent, -1);
+            startActivityForResult(intent, REQUEST_MAKE_ORDER);
         }else{
             //fallback
             intent.putExtra(SellerListActivity.HAWKER_CENTER_ID, contents);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivityForResult(intent, -1);
+            startActivityForResult(intent, REQUEST_MAKE_ORDER);
         }
     }
 
@@ -75,7 +78,7 @@ public class MainActivity extends ActionBarActivity implements OrderManager.Chec
             intent.putExtra(MealDetailActivity.APP_MADE, true);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            startActivity(intent);//ForResult(intent, -1);
+            startActivityForResult(intent, REQUEST_ORDER_DETAILS);//ForResult(intent, -1);
         }
     }
 }
