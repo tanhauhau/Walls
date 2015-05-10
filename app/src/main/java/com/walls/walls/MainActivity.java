@@ -46,7 +46,7 @@ public class MainActivity extends Activity implements OrderManager.CheckLocalCal
                     finish();
                     Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
                 } else {
-                    //                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                     processContent(result.getContents());
                 }
             }

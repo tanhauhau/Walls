@@ -25,6 +25,9 @@ public class CatalogManager {
     public static interface MealDetailCallback {
         public void onReceive(ParseObject parseObject);
     }
+    public static interface HawkerCenterDetailCallback {
+        public void onReceiveHawkerCenterDetail(ParseObject parseObject);
+    }
 
     public static void getSellerList(String hawkerCenterId, final SellerListCallback callback){
         ParseQuery<ParseObject> querySellerList = ParseQuery.getQuery("Seller");
@@ -41,6 +44,20 @@ public class CatalogManager {
         });
 
     }
+
+    public static void getHawkerCenterInfo(String hackerCenterId, final HawkerCenterDetailCallback callback) {
+        ParseQuery<ParseObject> queryHawkerCenter = ParseQuery.getQuery("HawkerCenter");
+        queryHawkerCenter.getInBackground(hackerCenterId, new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                if( e!= null){
+                    return;
+                }
+                callback.onReceiveHawkerCenterDetail(parseObject);
+            }
+        });
+    }
+
     public static void getMealList(String sellerId, final MealListCallback callback){
         ParseQuery<ParseObject> queryMealList = ParseQuery.getQuery("Meal");
         queryMealList.whereEqualTo("sellerId", ParseObject.createWithoutData("Seller", sellerId));
