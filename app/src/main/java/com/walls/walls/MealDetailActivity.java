@@ -29,6 +29,8 @@ public class MealDetailActivity extends ActionBarActivity implements View.OnClic
     public static final String TABLE_ID = "table";
     public static final String APP_MADE = "apm";
 
+    private boolean bought = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +59,7 @@ public class MealDetailActivity extends ActionBarActivity implements View.OnClic
             if (bundle.getBoolean(APP_MADE)) {
                 btnSubmit.setVisibility(View.GONE);
                 txtTime.setVisibility(View.VISIBLE);
+                bought = true;
             }
         }
     }
@@ -87,9 +90,19 @@ public class MealDetailActivity extends ActionBarActivity implements View.OnClic
             Toast.makeText(this, R.string.order_success, Toast.LENGTH_LONG).show();
             btnSubmit.setVisibility(View.GONE);
             txtTime.setVisibility(View.VISIBLE);
+            
+            bought = true;
         }else{
             Toast.makeText(this, R.string.order_error, Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(bought){
+            setResult(MainActivity.REQUEST_ORDER_DETAILS);
+        }
+        super.onBackPressed();
     }
 
     //
