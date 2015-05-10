@@ -14,7 +14,8 @@ import com.walls.walls.model.CatalogManager;
 
 import java.util.List;
 
-public class SellerListActivity extends ActionBarActivity implements CatalogManager.SellerListCallback, AdapterView.OnItemClickListener {
+public class SellerListActivity extends ActionBarActivity implements
+        CatalogManager.SellerListCallback, AdapterView.OnItemClickListener, CatalogManager.HawkerCenterDetailCallback {
     public static final String HAWKER_CENTER_ID = "hcid";
     private String tableId;
     private ListView listView;
@@ -30,6 +31,7 @@ public class SellerListActivity extends ActionBarActivity implements CatalogMana
             final String hcid = bundle.getString(HAWKER_CENTER_ID);
             tableId = bundle.getString(MealDetailActivity.TABLE_ID);
             CatalogManager.getSellerList(hcid, this);
+            CatalogManager.getHawkerCenterInfo(hcid, this);
         }
     }
     @Override
@@ -61,5 +63,10 @@ public class SellerListActivity extends ActionBarActivity implements CatalogMana
                 finish();
             }
         }
+    }
+
+    @Override
+    public void onReceiveHawkerCenterDetail(ParseObject parseObject) {
+        getSupportActionBar().setTitle(parseObject.getString("name"));
     }
 }
